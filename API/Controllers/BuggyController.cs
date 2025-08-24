@@ -35,5 +35,4 @@ public class BuggyController : BaseApiController
     {
         throw new Exception("This is test exception");
     }
-
 }
