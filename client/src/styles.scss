@@ -46,3 +46,7 @@ body {
     background-color: blue,
   ));
 }
+
+.container{
+  @apply mx-auto max-w-screen-2xl
+}
