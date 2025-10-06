@@ -1,12 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Product } from '../../shared/models/product';
 import { Shop as ShopService}  from '../../core/services/shop';
-import { MatCard } from '@angular/material/card';
+import { ProductItem } from './product-item/product-item';
 
 @Component({
   selector: 'app-shop',
   imports: [
-    MatCard
+    ProductItem
   ],
   templateUrl: './shop.html',
   styleUrl: './shop.scss'
