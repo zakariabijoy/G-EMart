@@ -16,10 +16,15 @@ export class Shop implements OnInit {
   private shopService = inject(ShopService);
 
   ngOnInit(): void {
+    this.initializeShop();
+  } 
+
+  initializeShop() {
+    this.shopService.getBrands();
+    this.shopService.getTypes();
     this.shopService.getProducts().subscribe({
       next: response =>  this.products.set(response.data),
       error: error =>  console.error(error)
     });
-  } 
-
+  }
 }
