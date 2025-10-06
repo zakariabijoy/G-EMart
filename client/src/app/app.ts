@@ -1,24 +1,14 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component,signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from "./layout/header/header";
-import { Product } from './shared/models/product';
-import { Shop } from './core/services/shop';
+import { Shop } from './features/shop/shop';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header],
+  imports: [RouterOutlet, Header, Shop],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements OnInit{
+export class App{
   protected readonly title = signal('client');
-  products: Product[] = [];
-  private shopService = inject(Shop);
-
-  ngOnInit(): void {
-    this.shopService.getProducts().subscribe({
-      next: response =>  this.products = response.data,
-      error: error =>  console.error(error)
-    });
-  }
 }
