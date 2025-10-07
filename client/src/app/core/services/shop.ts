@@ -19,7 +19,7 @@ export class Shop {
     if (shopParams.types.length > 0) params = params.append('types', shopParams.types.join(','));
     if (shopParams.sort) params = params.append('sort', shopParams.sort);
     if (shopParams.search) params = params.append('search', shopParams.search);
-    if (shopParams.pageNumber) params = params.append('pageNumber', shopParams.pageNumber);
+    if (shopParams.pageNumber) params = params.append('pageIndex', shopParams.pageNumber);
     if (shopParams.pageSize) params = params.append('pageSize', shopParams.pageSize);
     return this.http.get<Pagination<Product>>(this.baseurl + 'products', { params });
   }
