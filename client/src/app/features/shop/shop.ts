@@ -8,6 +8,7 @@ import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { ShopParams } from '../../shared/models/shopParams';
 
 @Component({
   selector: 'app-shop',
@@ -28,14 +29,13 @@ export class Shop implements OnInit {
   private dialogService = inject(MatDialog);
 
   products = signal<Product[]>([]);
-  selectedBrands = signal<string[]>([]);
-  selectedTypes = signal<string[]>([]);
-  selectedSort = signal<string>('name');
   sortOptions = [
     { name: 'Alphabetical', value: 'name' },
     { name: 'Price: Low-High', value: 'priceAsc' },
     { name: 'Price: High-Low', value: 'priceDesc' }
   ];
+
+  shopParams = new ShopParams();
 
   ngOnInit(): void {
     this.initializeShop();
@@ -48,7 +48,7 @@ export class Shop implements OnInit {
   }
 
   getProducts() {
-    this.shopService.getProducts(this.selectedBrands(), this.selectedTypes(), this.selectedSort()).subscribe({
+    this.shopService.getProducts(this.shopParams).subscribe({
       next: response => this.products.set(response.data),
       error: error => console.error(error)
     });
@@ -57,7 +57,7 @@ export class Shop implements OnInit {
   onSortChange(event: MatSelectionListChange) {
     const selectedOption = event.options[0];
     if (selectedOption) {
-      this.selectedSort.set(selectedOption.value);
+      this.shopParams.sort = selectedOption.value;
       this.getProducts();
     }
   }
@@ -66,16 +66,16 @@ export class Shop implements OnInit {
     const dialogRef = this.dialogService.open(FilterDialog, {
       minHeight: '500px',
       data: {
-        selectedBrands: this.selectedBrands(),
-        selectedTypes: this.selectedTypes()
+        selectedBrands: this.shopParams.brands,
+        selectedTypes: this.shopParams.types
       }
     });
 
     dialogRef.afterClosed().subscribe({
       next: result => {
         if(result) {
-          this.selectedBrands.set(result.selectedBrands);
-          this.selectedTypes.set(result.selectedTypes);
+          this.shopParams.brands = result.selectedBrands;
+          this.shopParams.types = result.selectedTypes;
           this.getProducts();
         }
       },
