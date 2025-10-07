@@ -46,3 +46,11 @@ body {
     background-color: blue,
   ));
 }
+
+.match-input-height {
+ height: var(--mat-form-field-container-height) !important;
+}
+
+.text-primary {
+  color: var(--mat-sys-primary) !important;
+}
