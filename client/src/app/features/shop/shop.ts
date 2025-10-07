@@ -50,10 +50,12 @@ export class Shop implements OnInit {
     dialogRef.afterClosed().subscribe({
       next: result => {
         if(result) {
-          console.log(result);
           this.selectedBrands.set(result.selectedBrands);
           this.selectedTypes.set(result.selectedTypes);
-          //this.applyFilters();
+          this.shopService.getProducts(this.selectedBrands(), this.selectedTypes()).subscribe({
+            next: response => this.products.set(response.data),
+            error: error => console.error(error)
+          });
         }
       },
       error: error => console.error(error)
