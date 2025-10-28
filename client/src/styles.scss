@@ -54,3 +54,7 @@ body {
 .text-primary {
   color: var(--mat-sys-primary) !important;
 }
+
+.mdc-notched-outline__notch {
+  border-right-style: none !important;
+} 
